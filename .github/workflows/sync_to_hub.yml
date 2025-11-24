@@ -1,0 +1,20 @@
+name: Sync to Hugging Face Hub
+on:
+  push:
+    branches: [main]  # تأكد إن الفرع الرئيسي عندك اسمه main مش master
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          lfs: true
+      
+      - name: Push to hub
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        # هنا أنا حطيت اسمك واسم المشروع زي ما أنت بعت
+        # تأكد إن الـ Space على Hugging Face اسمه "Marketing" (أول حرف كابيتال)
+        run: git push --force https://moeliwa:$HF_TOKEN@huggingface.co/spaces/moeliwa/Marketing main
